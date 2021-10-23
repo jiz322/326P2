@@ -58,6 +58,7 @@ def train(model, max_iters = 10, record_every = 1, max_passes = 1, tol=1e-6):
     models = []
     iter_num.append(-1)
     duals.append(dual_objective_function(model.alpha, model.train_y, model.train_X, model.kernel_func, model.sigma))
+    #print("shshsh: ", model.alpha.shape, model.train_y.shape, model.train_X.shape)
     primals.append(primal_objective_function(model.alpha, model.train_y, model.train_X, model.b, model.C, model.kernel_func, model.sigma))
     models.append(copy.deepcopy(model))
     for t in range(max_iters):
@@ -136,15 +137,14 @@ def train(model, max_iters = 10, record_every = 1, max_passes = 1, tol=1e-6):
                     #update the bias b
                     b1 = model.b - E1 - model.train_y[0][i] * alpha_diff_i * K[0][0] - model.train_y[0][j] * alpha_diff_j * K[0][1]
                     b2 = model.b - E2 - model.train_y[0][i] * alpha_diff_i * K[0][1] - model.train_y[0][j] * alpha_diff_j * K[1][1]
-                    b = 0
                     can_b1 = (new_alpha_i > 0 and new_alpha_i < model.C)
                     can_b2 = (new_alpha_j > 0 and new_alpha_j < model.C)
                     if can_b2:
-                        b = b2
+                        model.b = b2
                     if can_b1:
-                        b = b1
+                        model.b = b1
                     if not (can_b1 or can_b2):
-                        b = 0.5 * (b1 + b2)
+                        model.b = 0.5 * (b1 + b2)
                     #Increase the num_changes by  1
                     num_changes = num_changes + 1
             #One pass without changing any parameters
