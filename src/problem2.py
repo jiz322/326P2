@@ -136,7 +136,10 @@ def decision_function(alpha, train_y, train_X, b, kernel_function, sigma, test_X
         w = np.zeros((n,1))
         for i in range(m):
             w = w + alpha[0][i]*train_y[0][i]*train_X.T[i:i+1].T
-        z = np.dot(w.T[0], train_X) + b
+        if w.shape != ():
+            z = np.dot(w.T[0], train_X) + b
+        else:
+            z = np.dot(w, train_X) + b
         return z
     
     #Guassian Kernel
