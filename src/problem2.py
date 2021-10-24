@@ -128,6 +128,8 @@ def decision_function(alpha, train_y, train_X, b, kernel_function, sigma, test_X
     """
     #########################################
     ## INSERT YOUR CODE HERE
+    if test_X is not None:
+        train_X = test_X
     m = alpha.shape[1]
     n = train_X.shape[0]
     if kernel_function.__name__ == "linear_kernel":
