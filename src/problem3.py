@@ -176,8 +176,8 @@ def violate_KKT(model, i, tol):
     #print("\n (xi[i], alpha_i) : ", (xi[0][i], model.alpha[0][i]))
     #print("\n z : ", z)
 
-    if model.alpha[0][i] >= 0 - tol and model.alpha[0][i] < model.C + tol:
-        if xi[0][i] == 0:
+    if model.alpha[0][i] >= 0 and model.alpha[0][i] < model.C:
+        if xi[0][i] >= 0 - tol and xi[0][i] <= 0 + tol:
             return False
     if model.alpha[0][i] >= model.C - tol or model.alpha[0][i] <= model.C + tol:
         #print("KKT(67): ", z[i]*model.train_y[0][i] - 1 + xi[0][i])

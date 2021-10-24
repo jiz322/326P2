@@ -131,7 +131,6 @@ def decision_function(alpha, train_y, train_X, b, kernel_function, sigma, test_X
     m = alpha.shape[1]
     n = train_X.shape[0]
     if kernel_function.__name__ == "linear_kernel":
-        #compute w for linear Kernel
         w = np.zeros((n,1))
         for i in range(m):
             w = w + alpha[0][i]*train_y[0][i]*train_X.T[i:i+1].T
