@@ -147,7 +147,7 @@ def train(model, max_iters = 10, record_every = 1, max_passes = 1, tol=1e-6):
                     num_changes = num_changes + 1
             #One pass without changing any parameters
             print("\nnum_change: ",num_changes)
-            if num_changes <= 4:
+            if num_changes <= 2:
                 num_passes = num_passes + 1
             #At least one pair of alpha's are changed
             else:
