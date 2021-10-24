@@ -50,6 +50,8 @@ def train_test_SVM(**kwargs):
     # save your trained model to file
     with open('../data/trained_model_{}_{}.pkl'.format(kwargs['distribution'], kwargs['kernel'].__name__), 'wb') as f:
         pickle.dump(model, f)
+    
+    print(model.alpha)
 
     # call the predict function from problem3.
     predicted_y = predict(model, kwargs['Test X'])
@@ -92,7 +94,7 @@ if __name__ == "__main__":
                       'C': C,
                       'sigma': sigma,
                       'kernel': kernel,
-                      'max_iters': 2,
+                      'max_iters': 1,
                       'record_every': 1
                       }
 
