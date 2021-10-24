@@ -148,7 +148,7 @@ def decision_function(alpha, train_y, train_X, b, kernel_function, sigma, test_X
         return z
     
     #Guassian Kernel
-    z = np.zeros(m) 
+    z = np.zeros((1,m2)) 
     # for i in range(m):
     #     for j in range(m):
     #         xi = np.array([train_X.T[i]]).T
