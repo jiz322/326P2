@@ -52,6 +52,7 @@ def train(model, max_iters = 10, record_every = 1, max_passes = 1, tol=1e-6):
     #########################################
     ## INSERT YOUR CODE HERE
     #For same index, duals is less than primals
+    print("maxpass: \n", max_passes)
     iter_num = []
     duals = []
     primals = []
@@ -62,6 +63,7 @@ def train(model, max_iters = 10, record_every = 1, max_passes = 1, tol=1e-6):
     primals.append(primal_objective_function(model.alpha, model.train_y, model.train_X, model.b, model.C, model.kernel_func, model.sigma))
     models.append(copy.deepcopy(model))
     for t in range(max_iters):
+        print("\n\n\n\n\n\nt: ", t)
         num_passes = 0
         # counter = 0
         while num_passes < max_passes:
@@ -70,8 +72,8 @@ def train(model, max_iters = 10, record_every = 1, max_passes = 1, tol=1e-6):
             #     break
             num_changes = 0
             for i in range(model.m):
-                print("\nstarting alpha\n", model.alpha)
-                print("\nstarting b\n", model.b)
+                #print("\nstarting alpha\n", model.alpha)
+                print("\ni: \n", i)
                 if violate_KKT(model, i, tol):
                     j = int(rng.uniform(0, model.m))
                     while j == i: #j has to be different than i
@@ -121,6 +123,7 @@ def train(model, max_iters = 10, record_every = 1, max_passes = 1, tol=1e-6):
                         new_alpha_j = L_j
                     #if does not change much
                     if np.absolute(new_alpha_j - model.alpha[0][j]) <= tol:
+                        print("here")
                         continue
                     
                     #compute the new value of model.alpha[0][i] given new_alpha_j
@@ -148,7 +151,7 @@ def train(model, max_iters = 10, record_every = 1, max_passes = 1, tol=1e-6):
                     #Increase the num_changes by  1
                     num_changes = num_changes + 1
             #One pass without changing any parameters
-            print("\n\n hhhhhhh: ",num_changes)
+            print("\nnum_change: ",num_changes)
             if num_changes == 0:
                 num_passes = num_passes + 1
             #At least one pair of alpha's are changed
@@ -170,17 +173,17 @@ def violate_KKT(model, i, tol):
     xi = hinge_loss(z, model.train_y)
 
     #possible error, so I print out values here
-    print("\n (xi[i], alpha_i) : ", (xi[0][i], model.alpha[0][i]))
-    print("\n z : ", z)
+    #print("\n (xi[i], alpha_i) : ", (xi[0][i], model.alpha[0][i]))
+    #print("\n z : ", z)
 
-    if model.alpha[0][i] >= 0 and model.alpha[0][i] < model.C:
+    if model.alpha[0][i] >= 0 - tol and model.alpha[0][i] < model.C + tol:
         if xi[0][i] == 0:
             return False
-    if model.alpha[0][i] == model.C:
-        print("KKT(67): ", z[i]*model.train_y[0][i] - 1 + xi[0][i])
+    if model.alpha[0][i] >= model.C - tol or model.alpha[0][i] <= model.C + tol:
+        #print("KKT(67): ", z[i]*model.train_y[0][i] - 1 + xi[0][i])
         if xi[0][i] >= 0:
             return False
-    print("True")
+    #print("True")
     return True
 
 def predict(model, test_X):

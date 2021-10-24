@@ -74,7 +74,7 @@ def primal_objective_function(alpha, train_y, train_X, b, C, kernel_function, si
         #compute w for linear Kernel
         w = np.zeros((n,1))   #??? n?????
         for i in range(m):
-            print("\n\n",alpha[0][i]*train_y[0][i]*train_X.T[i:i+1].T)
+           # print("\n\n",alpha[0][i]*train_y[0][i]*train_X.T[i:i+1].T)
             w = w + alpha[0][i]*train_y[0][i]*train_X.T[i:i+1].T
         z = np.dot(w.T[0], train_X) + b
         xi = hinge_loss(z, train_y)
