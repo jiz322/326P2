@@ -155,12 +155,12 @@ def decision_function(alpha, train_y, train_X, b, kernel_function, sigma, test_X
     #         xj = np.array([train_X.T[j]]).T
     #         z[i] = z[i] + alpha[0][i] * train_y[0][i] * kernel_function(xj, xi, sigma)[0][0]
     #         print("\n      ",z[i])
-    for i in range(m2):
-        xi = np.array([test_X.T[i]]).T
+    for i in range(m):
+        xi = np.array([train_X.T[i]]).T
         
         print("test x: ", test_X)
         print("x_i: ", xi)
-        z = z + alpha[0][i] * train_y[0][i] * kernel_function(xi, test_X, sigma)[0]
+        z = z + alpha[0][i] * train_y[0][i] * kernel_function(xi, test_X, sigma)
         print("shape of Z in P2: ", z)
         # print("\nalpha :", alpha[0][i])
         # print("\ntrain_y[0][i] :", train_y[0][i])
