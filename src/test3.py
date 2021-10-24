@@ -51,4 +51,5 @@ def test_predict():
     model.b = 1
 
     predicted_y = predict(model, train_X)
+    print(predicted_y)
     assert np.allclose(predicted_y, [1, -1], atol=1e-6)

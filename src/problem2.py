@@ -128,19 +128,23 @@ def decision_function(alpha, train_y, train_X, b, kernel_function, sigma, test_X
     """
     #########################################
     ## INSERT YOUR CODE HERE
-    if test_X is not None:
-        train_X = test_X
     m = train_X.shape[1]
     n = train_X.shape[0]
+    m2 = test_X.shape[1]
     if kernel_function.__name__ == "linear_kernel":
         w = np.zeros((n,1))
         for i in range(m):
             w = w + alpha[0][i]*train_y[0][i]*train_X.T[i:i+1].T
+            #print("www: ", w)
         #print("wwww:v ",w.shape)
         if w.shape != ():
-            z = np.dot(w.T[0], train_X) + b
+            #print(w.T)
+            #print("test_X:", test_X)
+            z = np.dot(w.T, test_X) + b
+            
+            #print(z)
         else:
-            z = np.dot(w, train_X) + b
+            z = np.dot(w, test_X.T) + b
         return z
     
     #Guassian Kernel
@@ -151,8 +155,8 @@ def decision_function(alpha, train_y, train_X, b, kernel_function, sigma, test_X
     #         xj = np.array([train_X.T[j]]).T
     #         z[i] = z[i] + alpha[0][i] * train_y[0][i] * kernel_function(xj, xi, sigma)[0][0]
     #         print("\n      ",z[i])
-    for i in range(m):
-        xi = np.array([train_X.T[i]]).T
+    for i in range(m2):
+        xi = np.array([test_X.T[i]]).T
         z = z + alpha[0][i] * train_y[0][i] * kernel_function(xi, train_X, sigma)[0]
         # print("\nalpha :", alpha[0][i])
         # print("\ntrain_y[0][i] :", train_y[0][i])

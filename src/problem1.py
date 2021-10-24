@@ -71,8 +71,10 @@ def hinge_loss(z, y):
     """
     #########################################
     ## INSERT YOUR CODE HERE
-    l = np.zeros((1, len(z)))
+    if (len(z.shape)) == 1:
+        z = np.array(z[np.newaxis,:])
+    l = np.zeros((1, z.shape[1]))
     for i in range(l.shape[1]):
-        l[0][i] = np.maximum(0, 1-z[i]*y[0][i])
+        l[0][i] = np.maximum(0, 1-z[0][i]*y[0][i])
     return l
     #########################################

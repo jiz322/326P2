@@ -66,7 +66,7 @@ def test_decision_function():
     ''' (5 points) decision_function()'''
     train_X = np.array([[1, 1], [-1, -1]]).T
     train_y = np.array([[1, -1]])
-    test_X = None
+    test_X = np.array([[1, 1], [-1, -1]]).T
     alpha = np.array([[1, 1]])
     b = 4
 

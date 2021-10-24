@@ -58,7 +58,7 @@ def train(model, max_iters = 10, record_every = 1, max_passes = 1, tol=1e-6):
     primals = []
     models = []
     for t in range(max_iters):
-        print("\n\n\n\n\n\nt: ", t)
+        #print("\n\n\n\n\n\nt: ", t)
         num_passes = 0
         # counter = 0
         while num_passes < max_passes:
@@ -118,7 +118,7 @@ def train(model, max_iters = 10, record_every = 1, max_passes = 1, tol=1e-6):
                         new_alpha_j = L_j
                     #if does not change much
                     if np.absolute(new_alpha_j - model.alpha[0][j]) <= tol:
-                        print("here")
+                        #print("here")
                         continue
                     
                     #compute the new value of model.alpha[0][i] given new_alpha_j
@@ -164,7 +164,7 @@ def train(model, max_iters = 10, record_every = 1, max_passes = 1, tol=1e-6):
 
 #If model.alpha[0][i] violate KTT, return True
 def violate_KKT(model, i, tol):
-    z = decision_function(model.alpha, model.train_y, model.train_X, model.b, model.kernel_func, model.sigma, np.array([model.train_X.T[i].T]))
+    z = decision_function(model.alpha, model.train_y, model.train_X, model.b, model.kernel_func, model.sigma, model.train_X)
     xi = hinge_loss(z, model.train_y)
 
     #possible error, so I print out values here
@@ -172,11 +172,11 @@ def violate_KKT(model, i, tol):
     #print("\n z : ", z)
 
     if model.alpha[0][i] >= 0 - tol and model.alpha[0][i] < model.C + tol:
-        if xi[0][0] >= 0 - tol and xi[0][0] <= 0 + tol:
+        if xi[0][i] >= 0 - tol and xi[0][i] <= 0 + tol:
             return False
     if model.alpha[0][i] >= model.C - tol and model.alpha[0][i] <= model.C + tol:
         #print("KKT(67): ", z[i]*model.train_y[0][i] - 1 + xi[0][i])
-        if xi[0][0] >= 0 - tol:
+        if xi[0][i] >= 0 - tol:
             return False
     #print("True")
     return True
@@ -191,10 +191,13 @@ def predict(model, test_X):
     #########################################
     ## INSERT YOUR CODE HERE
     z = decision_function(model.alpha, model.train_y, model.train_X, model.b, model.kernel_func, model.sigma, test_X)
-    for i in range(len(z)):
-        if z[i] >= 0:
-            z[i] = 1
+    print("Z: ", z)
+    if (len(z.shape)) == 1:
+        z = np.array(z[np.newaxis,:])
+    for i in range(z.shape[1]):
+        if z[0][i] >= 0:
+            z[0][i] = 1
         else:
-            z[i] = -1
+            z[0][i] = -1
     return z
     #########################################
