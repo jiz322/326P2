@@ -164,6 +164,8 @@ def decision_function(alpha, train_y, train_X, b, kernel_function, sigma, test_X
         # print("\nzzz :", alpha[0][i])
     z  = z + b
     print("shape of Z in P2: ", z)
+    print("test x: ", test_X)
+
 
     return z
     #########################################
