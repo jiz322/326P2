@@ -92,7 +92,7 @@ if __name__ == "__main__":
                       'C': C,
                       'sigma': sigma,
                       'kernel': kernel,
-                      'max_iters': 10,
+                      'max_iters': 2,
                       'record_every': 1
                       }
 

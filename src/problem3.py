@@ -57,11 +57,6 @@ def train(model, max_iters = 10, record_every = 1, max_passes = 1, tol=1e-6):
     duals = []
     primals = []
     models = []
-    iter_num.append(-1)
-    duals.append(dual_objective_function(model.alpha, model.train_y, model.train_X, model.kernel_func, model.sigma))
-    #print("shshsh: ", model.alpha.shape, model.train_y.shape, model.train_X.shape)
-    primals.append(primal_objective_function(model.alpha, model.train_y, model.train_X, model.b, model.C, model.kernel_func, model.sigma))
-    models.append(copy.deepcopy(model))
     for t in range(max_iters):
         print("\n\n\n\n\n\nt: ", t)
         num_passes = 0
