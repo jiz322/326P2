@@ -60,11 +60,11 @@ def train(model, max_iters = 10, record_every = 1, max_passes = 1, tol=1e-6):
     for t in range(max_iters):
         #print("\n\n\n\n\n\nt: ", t)
         num_passes = 0
-        # counter = 0
+        counter = 0
         while num_passes < max_passes:
-            # counter = counter + 1
-            # if counter == 10:
-            #     break
+            counter = counter + 1
+            if counter == 10:
+                break
             num_changes = 0
             for i in range(model.m):
                 #print("\nstarting alpha\n", model.alpha)
@@ -147,7 +147,7 @@ def train(model, max_iters = 10, record_every = 1, max_passes = 1, tol=1e-6):
                     num_changes = num_changes + 1
             #One pass without changing any parameters
             print("\nnum_change: ",num_changes)
-            if num_changes <= 2:
+            if num_changes == 0:
                 num_passes = num_passes + 1
             #At least one pair of alpha's are changed
             else:
@@ -170,7 +170,8 @@ def violate_KKT(model, i, tol):
     #possible error, so I print out values here
     #print("\n (xi[i], alpha_i) : ", (xi[0][i], model.alpha[0][i]))
     #print("\n z : ", z)
-
+    if model.alpha[0][i] == 0:
+        return True
     if model.alpha[0][i] >= 0 - tol and model.alpha[0][i] < model.C + tol:
         if xi[0][i] >= 0 - tol and xi[0][i] <= 0 + tol:
             return False
